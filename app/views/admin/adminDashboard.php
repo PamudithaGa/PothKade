@@ -158,10 +158,7 @@
                     </form>
                 </div>
 
-
-
-
-
+                <!-- Table Preview -->	
                 <div class="mb-6 flex items-center">
                     <h3 class="mr-4 text-xl font-semibold text-gray-800">Book List</h3>
                 </div>
@@ -176,7 +173,7 @@
                             <tr>
                                 <th class="px-4 py-2 text-left text-gray-600">ISBN</th>
                                 <th class="px-4 py-2 text-left text-gray-600">Name</th>
-                                <th class="px-4 py-2 text-left text-gray-600">Price</th>
+                                <!-- <th class="px-4 py-2 text-left text-gray-600">Price</th> -->
                                 <th class="px-4 py-2 text-left text-gray-600">More</th>
                                 <th class="px-4 py-2 text-left text-gray-600">Image</th>
                                 <th class="px-4 py-2 text-left text-gray-600">Spotlight</th>
@@ -184,26 +181,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php 
-        $bookModel = $this->loadModel("BookModel");
-        $books = $bookModel->getAllBooks();
-    if (!empty($books)) : 
-        foreach ($books as $bookModel) : ?>
-
-
-
-
-
-
-
-
-
+                            <?php $bookModel = $this->loadModel("BookModel");
+                            $books = $bookModel->getAllBooks();
+                            if (!empty($books)) : 
+                            foreach ($books as $bookModel) : ?>
 
                             <tr class="book-row">
                                 <td class="px-4 py-2"><?php echo htmlspecialchars($bookModel['isbn']); ?></td>
                                 <td class="book-name px-4 py-2"><?php echo htmlspecialchars($bookModel['name']); ?></td>
-                                <td class="px-4 py-2"><?php echo htmlspecialchars($bookModel['price']); ?></td>
                                 <td class="px-4 py-2">
+                                    <h class="font-semibold">Price: </h><?php echo htmlspecialchars($bookModel['price']); ?><br>
                                     <h class="font-semibold">Author: </h> <?php echo htmlspecialchars($bookModel['author']); ?><br>
                                     <h class="font-semibold">Language: </h><?php echo htmlspecialchars($bookModel['language']); ?><br>
                                     <h class="font-semibold">Avalabitily: </h><?php echo htmlspecialchars($bookModel['stock']); ?><br>
@@ -219,34 +206,34 @@
                                 <td class="px-4 py-2">
                                     <?php echo htmlspecialchars($bookModel['spotlight']); ?><br>
                                 </td>
-
-                                
                                 <td class="px-4 py-2">
                                     <button
-                                        onclick="showUpdateForm(<?php echo $bookModel['bookid']; ?>, '<?php echo addslashes($bookModel['name']); ?>', <?php echo $bookModel['price']; ?>, '<?php echo addslashes($bookModel['category']); ?>', '<?php echo addslashes($bookModel['description']); ?>')"
-                                        class="rounded bg-blue-500 px-4 py-2 text-white">Update</button>
-                                        <form method="POST" action="<?= BASE_URL . 'deleteBook' ?>">
-    <input type="hidden" name="bookid" value="<?= htmlspecialchars($book['bookid']) ?>">
-    <button type="submit" class="rounded bg-red-500 px-4 py-2 text-white">Delete</button>
-</form>
+                                        onclick="showUpdateForm(
+                                            <?php echo $bookModel['bookid']; ?>, 
+                                            '<?php echo addslashes($bookModel['name']); ?>', 
+                                            <?php echo $bookModel['price']; ?>, 
+                                            '<?php echo addslashes($bookModel['category']); ?>', 
+                                            '<?php echo addslashes($bookModel['description']); ?>')"
+                                                class="rounded bg-blue-500 px-4 py-2 text-white">Update
+                                    </button>
 
-                                </td>                                
-                            </tr>
-                            <?php 
-                endforeach;
-            else: 
-            ?>
+                                    <form method="POST" action="<?= BASE_URL . 'book/delete' ?>" style="display:inline;">
+                                        <input type="hidden" name="bookid" value="<?= htmlspecialchars($bookModel['bookid'] ?? '') ?>">
+                                        <button type="submit" class="rounded bg-red-500 px-4 py-2 text-white">Delete</button>
+                                    </form>
+                                </td>
+                                <?php endforeach; ?>
+                                <?php else: ?>
                             <tr>
-                                <td colspan="6" class="px-4 py-2 text-center text-gray-500">Any Book Not Found.</td>
+                                <td colspan="6" class="px-4 py-2 text-center text-gray-500">No books available.</td>
                             </tr>
-                            <?php endif; ?>
+                                <?php endif; ?>
                         </tbody>
                     </table>
                 </div>
-
-
-
-                
+            </div>
+        </div>
+    </div>        
 </body>
 
 </html>

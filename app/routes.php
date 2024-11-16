@@ -7,5 +7,6 @@ $routes = [
     'book/view' => ['controller' => 'BookController', 'method' => 'viewBooks'],
     'book/delete' => ['controller' => 'BookController', 'method' => 'deleteBook'],
 
+
 ];
 ?>

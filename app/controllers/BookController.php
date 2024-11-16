@@ -69,30 +69,29 @@ public function addNewBook() {
     }
 }
 
-        //View products
-        public function viewBooks() {
-            $bookModel = $this->loadModel("BookModel");
-            $books = $bookModel->getAllBooks();
-            $this->renderView('adminDashboard', ["books" => $books]);
-        }
+//View products
+public function viewBooks() {
+    $bookModel = $this->loadModel("BookModel");
+    $books = $bookModel->getAllBooks();
+    $this->renderView('adminDashboard', ["books" => $books]);
+}
 
 
 // Delete the product
 public function deleteBook() {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Load the Book model
         $bookModel = $this->loadModel("BookModel");
+        $bookId = trim($_POST["bookid"]);
 
-        // Get the book ID from POST data
-        $bookid = trim($_POST["bookid"]);
+        // Debug: Check if bookId is received
+        if (empty($bookId)) {
+            die("Book ID is missing or invalid.");
+        }
 
-        // Attempt to delete the book
-        if ($bookModel->removeBook($bookid)) {
-            // Redirect to the admin dashboard on success
-            header('Location: ' . BASE_URL . 'adminDashboard');
+        if ($bookModel->removeBook($bookId)) {
+            header('Location: ' . BASE_URL . 'AdminDashboard');
             exit;
         } else {
-            // Handle failure
             echo "Failed to delete product.";
         }
     }

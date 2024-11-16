@@ -26,22 +26,30 @@ class BookModel {
         return $this->db->execute();
     }
     
-
-
-    public function removeBook($bookid) {
-        // Prepare the query to delete the book
-        $this->db->query("DELETE FROM books WHERE bookid = :bookid");
-        $this->db->bind(':bookid', $bookid);
-    
-        // Execute the query and return the result
-        return $this->db->execute();
-    }
-    
-
+    //View Books
     public function getAllBooks() {
         $this->db->query("SELECT * FROM books");
         return $this->db->resultSet();
     }
+
+
+    //Delete Books
+    public function removeBook($bookid) {
+        // Check if the record exists
+        $this->db->query("SELECT * FROM books WHERE bookid = :bookid");
+        $this->db->bind(':bookid', $bookid);
+        $result = $this->db->single();
+    
+        if (!$result) {
+            die("Book with ID '$bookid' does not exist.");
+        }
+    
+        // Proceed with deletion
+        $this->db->query("DELETE FROM books WHERE bookid = :bookid");
+        $this->db->bind(':bookid', $bookid);
+        return $this->db->execute();
+    }
+    
 
 
     
