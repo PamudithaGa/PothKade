@@ -1,0 +1,42 @@
+/* styles.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+/* Carousel container */
+.carousel {
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+    width: 100%; /* Adjust width as needed */
+    position: relative;
+}
+
+.book {
+    min-width: 130px;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Keyframes for the carousel slide effect */
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    25% {
+        opacity: 0;
+    }
+    50% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
